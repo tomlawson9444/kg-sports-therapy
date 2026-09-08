@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo_Black, Playfair_Display, Work_Sans } from "next/font/google";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 import "./globals.css";
 
 const archivoBlack = Archivo_Black({
@@ -32,7 +34,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${archivoBlack.variable} ${playfairDisplay.variable} ${workSans.variable}`}
     >
       <body className="flex min-h-screen flex-col bg-cream font-body text-ink antialiased">
-        {children}
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );
