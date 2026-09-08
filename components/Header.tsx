@@ -5,7 +5,7 @@ import { NAV_LINKS } from "@/components/navLinks";
 
 export function Header() {
   return (
-    <header className="relative border-b border-line bg-cream">
+    <header className="relative z-50 border-b border-line bg-cream">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
           <LogoBadge size="sm" />
