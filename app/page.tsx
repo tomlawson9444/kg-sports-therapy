@@ -1,52 +1,77 @@
-export default function Home() {
+import Link from "next/link";
+import { LogoBadge } from "@/components/LogoBadge";
+import { Section } from "@/components/Section";
+import { ServiceCard } from "@/components/ServiceCard";
+import { services } from "@/content/services";
+
+const VALUE_PROPS = [
+  {
+    title: "Sports-specific expertise",
+    body: "Treatment built around the demands of your sport, not a generic routine.",
+  },
+  {
+    title: "Hands-on rehabilitation",
+    body: "A clear, structured plan to get you from injury back to full training.",
+  },
+  {
+    title: "Flexible appointments",
+    body: "Evening and weekend slots to fit around training and match schedules.",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <>
+      <Section className="flex flex-col items-center gap-8 text-center">
+        <LogoBadge size="lg" />
+        <div className="flex flex-col gap-4">
+          <h1 className="font-heading text-4xl uppercase leading-tight sm:text-5xl">
+            Move. Recover. Repeat.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mx-auto max-w-xl font-accent text-lg italic text-ink-muted">
+            Sports therapy built around getting you back to what you love.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <Link
+          href="/contact/"
+          className="rounded-full bg-ink px-8 py-3 font-body text-sm font-semibold uppercase tracking-[0.15em] text-cream hover:bg-ink-muted"
+        >
+          Get in Touch
+        </Link>
+      </Section>
+
+      <Section className="grid gap-10 border-t border-line sm:grid-cols-3">
+        {VALUE_PROPS.map((item) => (
+          <div
+            key={item.title}
+            className="flex flex-col gap-2 text-center sm:text-left"
           >
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <h2 className="font-heading text-sm uppercase tracking-[0.15em]">
+              {item.title}
+            </h2>
+            <p className="font-body text-sm text-ink-muted">{item.body}</p>
+          </div>
+        ))}
+      </Section>
+
+      <Section className="border-t border-line">
+        <h2 className="mb-10 text-center font-heading text-2xl uppercase tracking-[0.1em]">
+          Services
+        </h2>
+        <div className="grid gap-6 sm:grid-cols-3">
+          {services.slice(0, 3).map((service) => (
+            <ServiceCard key={service.slug} service={service} />
+          ))}
         </div>
-      </main>
-    </div>
+        <div className="mt-10 text-center">
+          <Link
+            href="/services/"
+            className="font-body text-sm font-semibold uppercase tracking-[0.15em] underline underline-offset-4"
+          >
+            View all services
+          </Link>
+        </div>
+      </Section>
+    </>
   );
 }
