@@ -13,6 +13,7 @@ export function MobileNav() {
         type="button"
         onClick={() => setIsOpen((open) => !open)}
         aria-expanded={isOpen}
+        aria-controls="mobile-nav-menu"
         aria-label="Toggle navigation menu"
         className="flex h-10 w-10 flex-col items-center justify-center gap-1.5"
       >
@@ -21,7 +22,10 @@ export function MobileNav() {
         <span className="h-0.5 w-6 bg-ink" />
       </button>
       {isOpen ? (
-        <nav className="absolute inset-x-0 top-full flex flex-col gap-1 border-b border-line bg-cream px-6 py-4">
+        <nav
+          id="mobile-nav-menu"
+          className="absolute inset-x-0 top-full flex flex-col gap-1 border-b border-line bg-cream px-6 py-4"
+        >
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}

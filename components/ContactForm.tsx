@@ -23,9 +23,17 @@ export function ContactForm() {
   const [input, setInput] = useState<LeadFormInput>(INITIAL_INPUT);
   const [errors, setErrors] = useState<LeadFormErrors>({});
   const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [honeypot, setHoneypot] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (honeypot.trim() !== "") {
+      // Likely a bot — pretend it worked without actually submitting anything.
+      setStatus("success");
+      setInput(INITIAL_INPUT);
+      return;
+    }
 
     const validationErrors = validateLead(input);
     setErrors(validationErrors);
@@ -40,21 +48,54 @@ export function ContactForm() {
       await submitLead(input);
       setStatus("success");
       setInput(INITIAL_INPUT);
-    } catch {
+    } catch (error) {
+      console.error("Failed to submit lead:", error);
       setStatus("error");
     }
   }
 
   if (status === "success") {
     return (
-      <p className="font-body text-ink" role="status">
-        Thanks for getting in touch — we&apos;ll reply as soon as we can.
-      </p>
+      <div className="flex flex-col items-start gap-4">
+        <p className="font-body text-ink" role="status">
+          Thanks for getting in touch — we&apos;ll reply as soon as we can.
+        </p>
+        <button
+          type="button"
+          onClick={() => setStatus("idle")}
+          className="font-body text-sm font-semibold uppercase tracking-[0.15em] underline underline-offset-4"
+        >
+          Send another enquiry
+        </button>
+      </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          top: "auto",
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
+        }}
+      >
+        <label htmlFor="companyWebsite">Leave this field empty</label>
+        <input
+          id="companyWebsite"
+          name="companyWebsite"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(event) => setHoneypot(event.target.value)}
+        />
+      </div>
+
       <div className="flex flex-col gap-1">
         <label
           htmlFor="name"
@@ -65,6 +106,11 @@ export function ContactForm() {
         <input
           id="name"
           type="text"
+          required
+          aria-required="true"
+          aria-invalid={Boolean(errors.name)}
+          aria-describedby={errors.name ? "name-error" : undefined}
+          autoComplete="name"
           value={input.name}
           onChange={(event) =>
             setInput({ ...input, name: event.target.value })
@@ -72,7 +118,9 @@ export function ContactForm() {
           className="border border-line bg-cream px-4 py-2 font-body text-ink"
         />
         {errors.name ? (
-          <p className="text-sm text-red-700">{errors.name}</p>
+          <p id="name-error" className="text-sm text-red-700">
+            {errors.name}
+          </p>
         ) : null}
       </div>
 
@@ -86,6 +134,11 @@ export function ContactForm() {
         <input
           id="email"
           type="email"
+          required
+          aria-required="true"
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={errors.email ? "email-error" : undefined}
+          autoComplete="email"
           value={input.email}
           onChange={(event) =>
             setInput({ ...input, email: event.target.value })
@@ -93,7 +146,9 @@ export function ContactForm() {
           className="border border-line bg-cream px-4 py-2 font-body text-ink"
         />
         {errors.email ? (
-          <p className="text-sm text-red-700">{errors.email}</p>
+          <p id="email-error" className="text-sm text-red-700">
+            {errors.email}
+          </p>
         ) : null}
       </div>
 
@@ -107,6 +162,11 @@ export function ContactForm() {
         <input
           id="phone"
           type="tel"
+          required
+          aria-required="true"
+          aria-invalid={Boolean(errors.phone)}
+          aria-describedby={errors.phone ? "phone-error" : undefined}
+          autoComplete="tel"
           value={input.phone}
           onChange={(event) =>
             setInput({ ...input, phone: event.target.value })
@@ -114,7 +174,9 @@ export function ContactForm() {
           className="border border-line bg-cream px-4 py-2 font-body text-ink"
         />
         {errors.phone ? (
-          <p className="text-sm text-red-700">{errors.phone}</p>
+          <p id="phone-error" className="text-sm text-red-700">
+            {errors.phone}
+          </p>
         ) : null}
       </div>
 
@@ -135,7 +197,7 @@ export function ContactForm() {
         >
           <option value="">Not sure yet</option>
           {services.map((service) => (
-            <option key={service.slug} value={service.name}>
+            <option key={service.slug} value={service.slug}>
               {service.name}
             </option>
           ))}
