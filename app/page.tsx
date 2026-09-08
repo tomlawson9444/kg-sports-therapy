@@ -50,9 +50,9 @@ export default function HomePage() {
               key={item.title}
               className="flex flex-col gap-2 text-center sm:text-left"
             >
-              <h2 className="font-heading text-sm uppercase tracking-[0.15em]">
+              <h3 className="font-heading text-sm uppercase tracking-[0.15em]">
                 {item.title}
-              </h2>
+              </h3>
               <p className="font-body text-sm text-ink-muted">{item.body}</p>
             </div>
           ))}
