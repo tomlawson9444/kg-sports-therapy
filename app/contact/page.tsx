@@ -25,6 +25,7 @@ export default function ContactPage() {
           <p>Phone: [01234 567890]</p>
           <p>Email: [hello@kgsportstherapy.co.uk]</p>
           <p>Mon–Fri: 09:00–18:00 · Sat: 09:00–13:00</p>
+          <p>[Facebook] · [Instagram]</p>
         </div>
       </div>
       <ContactForm />

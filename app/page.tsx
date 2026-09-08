@@ -40,18 +40,23 @@ export default function HomePage() {
         </Link>
       </Section>
 
-      <Section className="grid gap-10 border-t border-line sm:grid-cols-3">
-        {VALUE_PROPS.map((item) => (
-          <div
-            key={item.title}
-            className="flex flex-col gap-2 text-center sm:text-left"
-          >
-            <h2 className="font-heading text-sm uppercase tracking-[0.15em]">
-              {item.title}
-            </h2>
-            <p className="font-body text-sm text-ink-muted">{item.body}</p>
-          </div>
-        ))}
+      <Section className="border-t border-line">
+        <h2 className="mb-10 text-center font-heading text-2xl uppercase tracking-[0.1em]">
+          Why Choose Us
+        </h2>
+        <div className="grid gap-10 sm:grid-cols-3">
+          {VALUE_PROPS.map((item) => (
+            <div
+              key={item.title}
+              className="flex flex-col gap-2 text-center sm:text-left"
+            >
+              <h2 className="font-heading text-sm uppercase tracking-[0.15em]">
+                {item.title}
+              </h2>
+              <p className="font-body text-sm text-ink-muted">{item.body}</p>
+            </div>
+          ))}
+        </div>
       </Section>
 
       <Section className="border-t border-line">

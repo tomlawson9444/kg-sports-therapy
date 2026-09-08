@@ -34,6 +34,11 @@ export default function AboutPage() {
           semi-professional teams — helping clients recover from injury and
           get back to doing what they love, faster and stronger.
         </p>
+        <p className="font-body text-ink-muted">
+          Every session is built around one idea: move well, recover
+          properly, and repeat — so you can keep doing the sport or activity
+          you love, injury-free.
+        </p>
         <div>
           <h3 className="font-heading text-sm uppercase tracking-[0.15em]">
             Qualifications
